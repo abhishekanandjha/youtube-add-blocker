@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Ad Skipper",
+  "version": "1.1",
+  "description": "Skips YouTube ads by fast-forwarding them at 10x speed and muting sound.",
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage",
+    "activeTab",
+    "webNavigation"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
