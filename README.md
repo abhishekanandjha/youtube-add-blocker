@@ -1,4 +1,4 @@
-# youtube-add-blocker
+# youtube-add-shorts-blocker
 
 ⸻
 ⚠️ Disclaimer
