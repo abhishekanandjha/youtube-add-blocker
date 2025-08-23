@@ -16,7 +16,7 @@ This gives you an ad-free, smooth YouTube experience without relying on external
 Features
 
 ✅ Detects when an ad starts
-✅ Increases ad playback speed to 10x (browser limit) or skip the entire add by calculating the add video duration and skipping to last
+✅ Increases ad playback speed to 10x (browser limit) or skip the entire add by calculating the ad video duration and skipping to last
 ✅ Mutes the ad while it’s running
 ✅ Instantly clicks the Skip Ad button when available (currently not working)
 ✅ Resets to normal playback after the ad finishes
