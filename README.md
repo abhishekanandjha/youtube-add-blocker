@@ -5,7 +5,7 @@
 YouTube Ad Skipper / Blocker
 
 A lightweight Chrome Extension that automatically skips YouTube ads by:
-	•	Playing ads at 10x speed or skip the entire add by calculating the add video duration and skipping to last
+	•	Playing ads at 10x speed or skip the entire add by calculating the ad video duration and skipping to last
 	•	Muting ads during playback
 	•	Clicking the “Skip Ad” button as soon as it appears
 
