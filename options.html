@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Blocker Settings</title>
+    <style>
+        body { font-family: sans-serif; padding: 10px; }
+        input { margin: 5px; }
+        button { margin: 5px; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Blocked URLs</h1>
+    <input id="match" type="text" placeholder="Match text (e.g. youtube.com/shorts)">
+    <input id="redirect" type="text" placeholder="Redirect URL">
+    <button id="addRule">Add Rule</button>
+
+    <ul id="rulesList"></ul>
+
+    <script src="options.js"></script>
+</body>
+</html>

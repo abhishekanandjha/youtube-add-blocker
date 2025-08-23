@@ -1,8 +1,41 @@
 # youtube-add-blocker
 
 ⸻
+⚠️ Disclaimer
 
-YouTube Ad Skipper / Blocker
+This extension is developed strictly for personal and educational purposes only.
+	•	It is not affiliated with, endorsed, or approved by YouTube, Google, or LinkedIn.
+	•	YouTube’s Terms of Service prohibit the use of third-party tools to block or alter ads. By using this 		extension, you acknowledge that you are solely responsible for any consequences that may arise from modifying your browsing experience.
+	•	The author of this project does not encourage, promote, or distribute ad-blocking as a commercial product.
+	•	This project is intended only as a learning exercise in Chrome extension development and personal productivity tool.
+
+If you choose to use this code, you do so at your own risk and responsibility.
+
+
+⸻
+
+⚖️ Legal Notes
+	•	Do not publish this extension on the Chrome Web Store or any public distribution platform.
+YouTube and LinkedIn explicitly prohibit the use of extensions that modify, block, or interfere with their ads and user experience. Uploading or distributing this publicly may result in takedowns, account bans, or legal action.
+	•	Personal Use Only
+This project should remain installed only in Developer Mode on your own machine. Do not share pre-built .crx files or promote this as an “ad blocker” to others.
+	•	Respect Platform Policies
+	•	YouTube and Google rely on ads for revenue. Bypassing or skipping ads violates their Terms of Service.
+	•	LinkedIn has similar restrictions against scraping or altering feed behavior.
+	•	Educational Purpose
+The primary goal of this project is to learn:
+	•	How Chrome extensions work
+	•	How to manipulate the DOM
+	•	How to handle single-page app (SPA) navigation with JavaScript
+	•	How MutationObservers, event dispatchers, and redirection rules function
+
+By using this project, you accept full responsibility for any actions or consequences. The author assumes no liability for misuse.
+
+
+YouTube Ad Skipper / Blocker / shorts Blocker
+
+•	🚫 Blocking YouTube Shorts (redirects you to neetcode homepage).
+•	🚫 Blocking LinkedIn Feed (redirects you to your neetcode profile instead).
 
 A lightweight Chrome Extension that automatically skips YouTube ads by:
 	•	Playing ads at 10x speed or skip the entire add by calculating the ad video duration and skipping to last
@@ -10,10 +43,14 @@ A lightweight Chrome Extension that automatically skips YouTube ads by:
 	•	Clicking the “Skip Ad” button as soon as it appears
 
 This gives you an ad-free, smooth YouTube experience without relying on external blockers.
-
+Perfect for productivity + uninterrupted video watching.
 ⸻
 
 Features
+🔴 Shorts & Feed Blocker
+•	If you open YouTube Shorts → You get redirected to YouTneetcodeube homepage.
+•	If you open LinkedIn Feed → You get redirected to your neetcode profile.
+•	Optionally, a freeze overlay is displayed for 1 minute to prevent going back.
 
 ✅ Detects when an ad starts
 ✅ Increases ad playback speed to 10x (browser limit) or skip the entire add by calculating the ad video duration and skipping to last

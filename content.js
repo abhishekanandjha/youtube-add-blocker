@@ -76,6 +76,78 @@
 
 //  ////////////////. version 3 with multiple hadd and handle skip button  ////////////////
 
+(function () {
+    // Hardcoded list of blocking rules
+    const redirectRules = [
+        {
+            match: "youtube.com/shorts/",
+            redirect: "https://www.youtube.com/"
+        },
+        {
+            match: "linkedin.com/feed/",
+            redirect: "https://www.linkedin.com/in/abhishek-anand-jha-4b3477188/"
+        }
+    ];
+
+    let lastUrl = location.href;
+
+    // Check every 500ms for URL change
+    setInterval(() => {
+        if (location.href !== lastUrl) {
+            lastUrl = location.href;
+            checkAndRedirect(location.href);
+        }
+    }, 500);
+
+    function checkAndRedirect(url) {
+        for (let rule of redirectRules) {
+            if (url.includes(rule.match)) {
+                window.location.href = rule.redirect;
+                setTimeout(() => {
+                    freezePage();
+                }, 1000);
+                break;
+            }
+        }
+    }
+
+    function freezePage() {
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.backgroundColor = "rgba(0,0,0,0.5)";
+        overlay.style.zIndex = "999999";
+        overlay.style.display = "flex";
+        overlay.style.justifyContent = "center";
+        overlay.style.alignItems = "center";
+        overlay.style.color = "#fff";
+        overlay.style.fontSize = "24px";
+        overlay.innerText = "Blocked for 1 minute...";
+        document.body.appendChild(overlay);
+
+        setTimeout(() => {
+            overlay.remove();
+        }, 60000);
+    }
+})();
+
+
+
+// How This Works Now
+// 	1.	Redirect Rules are hardcoded — works instantly after installing
+// 	2.	background.js catches both:
+// 	•	Page reloads (onCommitted)
+// 	•	SPA navigation (onHistoryStateUpdated)
+// 	3.	content.js runs in every tab:
+// 	•	Checks URL every 0.5s for changes
+// 	•	If it matches any rule → redirect + freeze page for 1 minute
+// 	4.	Works for YouTube Shorts, LinkedIn Feed, and can scale by adding new rules
+
+// ⸻
+
 function monitorYouTubePlayer() {
     const videoElement = document.querySelector("video");
 
@@ -140,7 +212,7 @@ function monitorYouTubePlayer() {
                 skipButton.click();
                 console.log("Skip button dispatched trusted click event");
             }
-        } 
+        }
         // else {
         //     // Restore to normal only when the ad finishes
         //     videoElement.playbackRate = 1;
@@ -149,6 +221,17 @@ function monitorYouTubePlayer() {
 
         // }
     });
+
+    function dismissYouTubeEnforcementBanner() {
+        const dismissButton = document.querySelector('#dismiss-button button');
+        if (dismissButton) {
+            dismissButton.click();
+            console.log("YouTube enforcement banner dismissed");
+        } else {
+            // Retry after 1s if not found yet
+            setTimeout(dismissYouTubeEnforcementBanner, 1000);
+        }
+    }
 
     function setVideoPlaybackRate(videoElement) {
         videoElement.playbackRate = 1;
@@ -166,5 +249,13 @@ function monitorYouTubePlayer() {
     console.log("Monitoring YouTube player for ads...");
 }
 
-// Start monitoring with a small delay
-setTimeout(monitorYouTubePlayer, 1000);
+
+if (window.location.host.includes("youtube.com")) {
+    // run YouTube ad skipper logic
+    // Start monitoring with a small delay
+    setTimeout(monitorYouTubePlayer, 1000);
+    setTimeout(dismissYouTubeEnforcementBanner, 2000);
+} else if (window.location.host.includes("linkedin.com")) {
+    // run LinkedIn ad skipper logic (e.g., speed up video, mute, skip if button exists)
+    // will see later
+}
