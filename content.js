@@ -210,6 +210,7 @@ function monitorYouTubePlayer() {
                 skipButton.dispatchEvent(down);
                 skipButton.dispatchEvent(up);
                 skipButton.click();
+                clickYouTubeSkipButton();
                 console.log("Skip button dispatched trusted click event");
             }
         }
@@ -222,15 +223,57 @@ function monitorYouTubePlayer() {
         // }
     });
 
-    function dismissYouTubeEnforcementBanner() {
-        const dismissButton = document.querySelector('#dismiss-button button');
-        if (dismissButton) {
-            dismissButton.click();
-            console.log("YouTube enforcement banner dismissed");
-        } else {
-            // Retry after 1s if not found yet
-            setTimeout(dismissYouTubeEnforcementBanner, 1000);
+    function dollarx(xpath) {
+        let return_elements = [];
+        let attribute = document.evaluate(
+            xpath,
+            document,
+            null,
+            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+            null
+        );
+        let attributesLength = attribute.snapshotLength;
+
+        for (let J = 0; J < attributesLength; ++J) {
+            let thisLink = attribute.snapshotItem(J);
+            return_elements.push(thisLink);
         }
+        return return_elements;
+    }
+
+    // Function to click Skip Ad button using XPath
+    function clickYouTubeSkipButton() {
+        try {
+            // XPath to match the Skip Ad button (matches all Skip buttons)
+            const skipButtonXPath = '//button[contains(@class, "ytp-skip-ad-button")]';
+
+            const skipButtons = dollarx(skipButtonXPath);
+
+            if (skipButtons.length > 0) {
+                // Loop through all matched buttons (usually 1)
+                skipButtons.forEach((button) => {
+                    // Dispatch a trusted click event
+                    const event = new MouseEvent("click", {
+                        view: window,
+                        bubbles: true,
+                        cancelable: true,
+                        composed: true
+                    });
+                    button.dispatchEvent(event);
+                    console.log("✅ Skip button clicked automatically via XPath");
+                });
+            } else {
+                console.log("No Skip button found via XPath");
+            }
+        } catch (error) {
+
+            console.error("Error in clickYouTubeSkipButton:", error);
+        }
+
+        //  else {
+        //     // Retry after 500ms if button not found yet
+        //     setTimeout(clickYouTubeSkipButton, 500);
+        // }
     }
 
     function setVideoPlaybackRate(videoElement) {
@@ -249,6 +292,17 @@ function monitorYouTubePlayer() {
     console.log("Monitoring YouTube player for ads...");
 }
 
+function dismissYouTubeEnforcementBanner() {
+    const dismissButton = document.querySelector('#dismiss-button button');
+    if (dismissButton) {
+        dismissButton.click();
+        console.log("YouTube enforcement banner dismissed");
+    } else {
+        // Retry after 1s if not found yet
+        setTimeout(dismissYouTubeEnforcementBanner, 1000);
+    }
+
+}
 
 if (window.location.host.includes("youtube.com")) {
     // run YouTube ad skipper logic
