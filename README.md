@@ -96,7 +96,8 @@ youtube-ad-skipper/
 	•	Options page → configure playback speed (10x) or direct skip
 	•	Dark mode icon
 	•	Auto-update selectors when YouTube changes UI
-  •	Block all the adult webiste for child safety and not able to uninstall the plugin without parent consent
+    •	Block all the adult webiste for child safety and not able to uninstall the plugin without parent consent
+	•	youtube / linkedin / X : shorts blocker for chrome and maybe extend for safari and edge
 
 ⸻
 
