@@ -10,6 +10,13 @@
     "activeTab",
     "webNavigation"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://*.linkedin.com/*"
+  ],
   "content_scripts": [
     {
       "matches": [

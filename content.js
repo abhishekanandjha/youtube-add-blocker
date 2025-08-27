@@ -81,7 +81,7 @@
     const redirectRules = [
         {
             match: "youtube.com/shorts/",
-            redirect: "https://www.youtube.com/"
+            redirect: "https://neetcode.io/practice?tab=neetcode250"//"https://www.youtube.com/"
         },
         {
             match: "linkedin.com/feed/",
@@ -177,10 +177,11 @@ function monitorYouTubePlayer() {
                 console.log("Ad detected → forcing 10x speed & muted");
             }
 
-            if (videoElement && videoElement.duration) {
-                videoElement.currentTime = videoElement.duration; // jump to end of ad
-                console.log("Forced skip by jumping video to end");
-            }
+            //  disabled it as youtube detect it that im skipping the adds
+            // if (videoElement && videoElement.duration) {
+            //     videoElement.currentTime = videoElement.duration; // jump to end of ad
+            //     console.log("Forced skip by jumping video to end");
+            // }
 
             setVideoPlaybackRate(videoElement);
             const skipButton =
@@ -313,3 +314,58 @@ if (window.location.host.includes("youtube.com")) {
     // run LinkedIn ad skipper logic (e.g., speed up video, mute, skip if button exists)
     // will see later
 }
+
+
+// // Function to remove YouTube home feed and replace with motivational message
+// function replaceHomeFeed() {
+//     // Check if current page is YouTube homepage
+//     if (location.pathname === "/" || location.pathname === "/feed/explore") {
+//         console.log("On YouTube homepage, replacing feed...");
+
+//         // Use MutationObserver because YouTube is SPA (dynamic load)
+//         const observer = new MutationObserver(() => {
+//             const homeFeed = document.querySelector("ytd-rich-grid-renderer");
+//             if (homeFeed) {
+//                 // Hide the original feed
+//                 homeFeed.style.display = "none";
+
+//                 // Check if our custom message already exists
+//                 if (!document.querySelector("#focus-message")) {
+//                     const messageDiv = document.createElement("div");
+//                     messageDiv.id = "focus-message";
+//                     messageDiv.style.textAlign = "center";
+//                     messageDiv.style.margin = "50px auto";
+//                     messageDiv.style.fontSize = "24px";
+//                     messageDiv.style.fontWeight = "bold";
+//                     messageDiv.style.color = "#ff4d4f";
+//                     messageDiv.innerText = "Stay focused! Search only what you need";
+
+//                     // Insert the message before the hidden feed
+//                     homeFeed.parentNode.insertBefore(messageDiv, homeFeed);
+//                 }
+
+//                 console.log("Home feed replaced with motivational message");
+//                 observer.disconnect(); // Stop observing once done
+//             }
+//         });
+
+//         // Observe body changes until feed appears
+//         observer.observe(document.body, { childList: true, subtree: true });
+//     }
+// }
+// // Run immediately on load
+// replaceHomeFeed();
+
+// // Detect SPA navigation (YouTube’s internal routing)
+// let lastUrl = location.href;
+// const urlObserver = new MutationObserver(() => {
+//     const currentUrl = location.href;
+//     if (currentUrl !== lastUrl) {
+//         lastUrl = currentUrl;
+//         console.log(" URL changed -> Re-checking home feed...");
+//         replaceHomeFeed();
+//     }
+// });
+
+// // Watch for URL changes inside YouTube’s SPA
+// urlObserver.observe(document, { subtree: true, childList: true });

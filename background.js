@@ -39,6 +39,60 @@ function freezePage() {
     }, 60000);
 }
 
+// Inject script that replaces YouTube home feed
+function injectReplaceHomeFeed(tabId) {
+    chrome.scripting.executeScript({
+        target: { tabId },
+        func: () => {
+            // Function to remove YouTube home feed and replace with motivational message
+            function replaceHomeFeed() {
+                if (location.pathname === "/" || location.pathname === "/feed/explore") {
+                    console.log("On YouTube homepage, replacing feed...");
+
+                    const observer = new MutationObserver(() => {
+                        const homeFeed = document.querySelector("ytd-rich-grid-renderer");
+                        if (homeFeed) {
+                            homeFeed.style.display = "none";
+
+                            if (!document.querySelector("#focus-message")) {
+                                const messageDiv = document.createElement("div");
+                                messageDiv.id = "focus-message";
+                                messageDiv.style.textAlign = "center";
+                                messageDiv.style.margin = "50px auto";
+                                messageDiv.style.fontSize = "24px";
+                                messageDiv.style.fontWeight = "bold";
+                                messageDiv.style.color = "#ff4d4f";
+                                messageDiv.innerText = "Stay focused! Search only what you need";
+                                homeFeed.parentNode.insertBefore(messageDiv, homeFeed);
+                            }
+
+                            console.log("Home feed replaced with motivational message");
+                            observer.disconnect();
+                        }
+                    });
+
+                    observer.observe(document.body, { childList: true, subtree: true });
+                } else {
+                    console.log("home feed not found");
+                }
+            }
+
+            // Run immediately
+            replaceHomeFeed();
+
+            // Detect SPA navigation (YouTube URL changes without reload)
+            let lastUrl = location.href;
+            new MutationObserver(() => {
+                const currentUrl = location.href;
+                if (currentUrl !== lastUrl) {
+                    lastUrl = currentUrl;
+                    replaceHomeFeed();
+                }
+            }).observe(document, { subtree: true, childList: true });
+        }
+    });
+}
+
 // Main redirect handler
 function handleNavigation(tabId, url) {
     for (let rule of redirectRules) {
@@ -47,13 +101,25 @@ function handleNavigation(tabId, url) {
                 setTimeout(() => {
                     chrome.scripting.executeScript({
                         target: { tabId: tabId },
-                        func: freezePage
+                        func: (() => {
+                            freezePage();
+                            // 2. If on YouTube, inject feed blocker
+
+                        })
                     });
                 }, 1000);
             });
             break;
         }
     }
+
+    if (url.includes("youtube.com")) {
+        injectReplaceHomeFeed(tabId);
+        console.log(" inide if statement");
+    } else {
+        console.log(" outside if statement");
+    }
+
 }
 
 // For normal page loads
